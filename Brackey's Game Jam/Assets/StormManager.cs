@@ -13,7 +13,7 @@ public class StormManager : MonoBehaviour
 
     bool gameRunning = false;
     bool gameWon = false;
-    float stopSurgeAfter = 11f;
+    float stopSurgeAfter = 10f;
     float stopIn = 0f;
 
     public BoxCollider2D waveCollider1;
@@ -25,16 +25,19 @@ public class StormManager : MonoBehaviour
     public Transform turtleTransform;
 
     public GameObject shopUI;
+    public RectTransform textTransform;
 
     void Start()
     {
         ps = gameObject.GetComponent<PlasticSpawner>(); 
-        gameRunning = true;
-        timeUntilSurge = 30;
         waveMover = GameObject.FindGameObjectWithTag("waves").GetComponent<WaveMover>();
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)){
+            gameRunning = true;
+            timeUntilSurge = 45;
+        }
         if (gameRunning){
             if (ps.activePlastic == 0){
                 timeUntilSurge = 0f;
@@ -56,7 +59,17 @@ public class StormManager : MonoBehaviour
                 }
             } else {
                 surgeCountdownText.color = Color.white;
-                surgeCountdownText.text = "Time Until Storm Surge: " + timeUntilSurge;
+                if (timeUntilSurge > 30 && levelNumber == 0){
+                    textTransform.sizeDelta = new Vector2 (2000, 100);
+                    if (timeUntilSurge > 40){
+                        surgeCountdownText.text = "Push the food to the top of the screen";
+                    } else {
+                        surgeCountdownText.text = "Get the food off the beach so it doesn't get swept away";
+                    }
+                } else {
+                    textTransform.sizeDelta = new Vector2 (960, 100);
+                    surgeCountdownText.text = "Time Until Storm Surge: " + timeUntilSurge;
+                }
             }
         } else {
             if (stopIn > 0){stopIn -= Time.deltaTime;}
