@@ -10,11 +10,14 @@ public class Plastic : MonoBehaviour
     bool inWater;
     public float waterStrength;
 
+    StormManager sm;
+
     void Start()
     {
         transform.localEulerAngles = new Vector3(0, 0, Random.Range(0, 360));
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = plasticSprites[Random.Range(0, plasticSprites.Length)];
+        sm = GameObject.FindGameObjectWithTag("logic").GetComponent<StormManager>();
     }
     void FixedUpdate()
     {
@@ -28,6 +31,7 @@ public class Plastic : MonoBehaviour
         if (collision.tag == "waves"){
             inWater = true;
             transform.SetParent(collision.transform, true);
+            sm.gameOver();
         }
     }
 }

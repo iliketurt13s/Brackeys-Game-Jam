@@ -6,6 +6,7 @@ TagManager:
   tags:
   - waves
   - plastic
+  - logic
   layers:
   - Default
   - TransparentFX
