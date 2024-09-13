@@ -7,6 +7,7 @@ public class PlasticSpawner : MonoBehaviour
     public GameObject plastic;
     public int plasticToSpawn;
     public int activePlastic;
+    [HideInInspector] public int totalPlastic;
 
     public float top;
     public float bottom;
@@ -14,6 +15,7 @@ public class PlasticSpawner : MonoBehaviour
     public float right;
     
     public GameObject[] spawnableObstacles;
+    int obstaclesToSpawn;
     List<GameObject> obstacles = new List<GameObject>();
 
     void Start()
@@ -31,8 +33,9 @@ public class PlasticSpawner : MonoBehaviour
             activePlastic++;
         }
         StormManager sm = gameObject.GetComponent<StormManager>();
-        int obstaclesToSpawn = sm.levelNumber + 1;
-        if (obstaclesToSpawn > 5){obstaclesToSpawn = 5;}
+        obstaclesToSpawn = sm.levelNumber + 1;
+        if (sm.levelNumber > 4){obstaclesToSpawn = 4;}
+        if (sm.levelNumber > 8){obstaclesToSpawn = 5;}
         if (obstaclesToSpawn > plasticToSpawn){plasticToSpawn = obstaclesToSpawn;}
         for (int i = obstaclesToSpawn; i > 0; i--){
             GameObject newOb = Instantiate(spawnableObstacles[Random.Range(0, spawnableObstacles.Length)], new Vector3(Random.Range(left, right), Random.Range(top, bottom), 0), Quaternion.Euler(0, 0, Random.Range(0, 360)));
@@ -42,8 +45,11 @@ public class PlasticSpawner : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision){
         if (collision.tag == "plastic"){
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            Plastic p = collision.GetComponent<Plastic>();
+            p.collect();
             activePlastic--;
+            totalPlastic++;
         }
     }
 }

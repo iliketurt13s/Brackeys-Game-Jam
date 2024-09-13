@@ -63,8 +63,8 @@ public class StormManager : MonoBehaviour
             surging = true;
             gameRunning = false;
             //stopIn = stopSurgeAfter;
-            surgeCountdownText.color = Color.green;
-            foreach(SpriteRenderer sr in lines){sr.color = Color.green;}
+            //surgeCountdownText.color = Color.green;
+            //foreach(SpriteRenderer sr in lines){sr.color = Color.green;}
             surgeCountdownText.text = "all food collected";
         }
         if (gameRunning){
@@ -74,14 +74,14 @@ public class StormManager : MonoBehaviour
                 gameRunning = false;
                 //stopIn = stopSurgeAfter;
                 if (!gameWon && !gameLost){
-                    surgeCountdownText.color = Color.red;
-                    foreach(SpriteRenderer sr in lines){sr.color = Color.red;}
+                    //surgeCountdownText.color = Color.red;
+                    //foreach(SpriteRenderer sr in lines){sr.color = Color.red;}
                     surgeCountdownText.text = "Water levels rising";
                 }
             } else {
                 ta.canMove = true;
-                foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
-                surgeCountdownText.color = Color.white;
+                //foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
+                //surgeCountdownText.color = Color.white;
                 if (timeUntilSurge > 30 && levelNumber == 0){
                     textTransform.sizeDelta = new Vector2 (2000, 100);
                     if (timeUntilSurge > 40){
@@ -101,8 +101,8 @@ public class StormManager : MonoBehaviour
             //if (stopIn > 0){stopIn -= Time.deltaTime;}
         }
         if (gameRestarted){
-            foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
-            surgeCountdownText.color = Color.white;
+            //foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
+            //surgeCountdownText.color = Color.white;
             surgeCountdownText.text = "Reseting...";
         }
         }
@@ -132,7 +132,7 @@ public class StormManager : MonoBehaviour
                 waveButtonText.text = "Continue Game";
             }
             if (gameLost){
-                waveHeader.text = "Total Food Salvaged: ";
+                waveHeader.text = "Total Food Salvaged: " + ps.totalPlastic;
                 waveButtonText.text = "Restart";
             }
         }
@@ -172,14 +172,15 @@ public class StormManager : MonoBehaviour
 
     public void gameOver(){
         gameLost = true;
-        surgeCountdownText.color = Color.red;
-        foreach(SpriteRenderer sr in lines){sr.color = Color.red;}
+        //surgeCountdownText.color = Color.red;
+        //foreach(SpriteRenderer sr in lines){sr.color = Color.red;}
         surgeCountdownText.text = "Game Lost";
         timeUntilSurge = 0;
     }
 
     void activateWaves(){
         gameInitialized = true;
+        waveMover.waitTime = 3;
         waveMover.speed = 0.0075f;
         waveButtonText.gameObject.SetActive(true);
         waveHeader.gameObject.SetActive(true);

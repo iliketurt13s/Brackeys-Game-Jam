@@ -12,6 +12,8 @@ public class Plastic : MonoBehaviour
 
     StormManager sm;
 
+    public GameObject poof;
+
     void Start()
     {
         transform.localEulerAngles = new Vector3(0, 0, Random.Range(0, 360));
@@ -29,9 +31,20 @@ public class Plastic : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "waves"){
+            Invoke("die", 1f);
             inWater = true;
             transform.SetParent(collision.transform, true);
             sm.gameOver();
         }
+    }
+
+    public void collect(){
+        Instantiate(poof, transform.position, Quaternion.Euler(0, 0, 180));
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(Vector2.up * 1.5f, ForceMode2D.Impulse);
+        Invoke("die", 1f);
+    }
+    void die(){
+        Destroy(gameObject);
     }
 }
