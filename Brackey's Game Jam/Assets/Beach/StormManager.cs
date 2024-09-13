@@ -8,7 +8,7 @@ public class StormManager : MonoBehaviour
 {
     WaveMover waveMover;
     public float timeUntilSurge;
-    int levelNumber;
+    [HideInInspector] public int levelNumber;
     public TMP_Text surgeCountdownText;
     public SpriteRenderer[] lines;
     bool surging = false;
@@ -45,7 +45,7 @@ public class StormManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && levelNumber == 0 && !gameRunning){
             gameRunning = true;
-            print("yeah");
+            //print("yeah");
             timeUntilSurge = 45;
         }
         if (Input.GetKeyDown(KeyCode.S) && levelNumber == 0 && !gameRunning){
