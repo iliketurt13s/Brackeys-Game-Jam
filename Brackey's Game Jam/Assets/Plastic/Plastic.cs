@@ -31,7 +31,7 @@ public class Plastic : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "waves"){
-            Invoke("die", 1f);
+            Invoke("die", .1f);
             inWater = true;
             transform.SetParent(collision.transform, true);
             sm.gameOver();

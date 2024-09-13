@@ -29,7 +29,11 @@ public class PlasticSpawner : MonoBehaviour
         }
         obstacles.Clear();
         for (int i = plasticToSpawn; i > 0; i--){
-            Instantiate(plastic, new Vector3(Random.Range(left, right), Random.Range(top, bottom), 0), Quaternion.identity);
+            float clampedX = Random.Range(left, right);
+            if (clampedX < 1 && clampedX > -1){clampedX = 1;}
+            float clampedY = Random.Range(top, bottom);
+            if (clampedY < 1 && clampedY > -1){clampedY = 1;}
+            Instantiate(plastic, new Vector3(clampedX, clampedY, 0), Quaternion.identity);
             activePlastic++;
         }
         StormManager sm = gameObject.GetComponent<StormManager>();
@@ -38,7 +42,11 @@ public class PlasticSpawner : MonoBehaviour
         if (sm.levelNumber > 8){obstaclesToSpawn = 5;}
         if (obstaclesToSpawn > plasticToSpawn){plasticToSpawn = obstaclesToSpawn;}
         for (int i = obstaclesToSpawn; i > 0; i--){
-            GameObject newOb = Instantiate(spawnableObstacles[Random.Range(0, spawnableObstacles.Length)], new Vector3(Random.Range(left, right), Random.Range(top, bottom), 0), Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            float clampedX = Random.Range(left, right);
+            if (clampedX < 1 && clampedX > -1){clampedX = 1;}
+            float clampedY = Random.Range(top, bottom);
+            if (clampedY < 1 && clampedY > -1){clampedY = 1;}
+            GameObject newOb = Instantiate(spawnableObstacles[Random.Range(0, spawnableObstacles.Length)], new Vector3(clampedX, clampedY, 0), Quaternion.Euler(0, 0, Random.Range(0, 360)));
             obstacles.Add(newOb);
         }
     }
