@@ -243,7 +243,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23211025}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -634,7 +634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &217142955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1932,11 +1932,15 @@ MonoBehaviour:
   plasticToSpawn: 3
   activePlastic: 0
   top: 2.5
-  bottom: -2
+  bottom: -1.75
   left: 5.75
   right: -5.75
   spawnableObstacles:
   - {fileID: 1268373390507192009, guid: 141e1b7363fe49c43928d25bbf7ec329, type: 3}
+  - {fileID: 3956317647847603995, guid: 6b4ba87ac17dad647adab63747de0024, type: 3}
+  - {fileID: 3721701824078751861, guid: e0aff0adfb2c97544bc9d53fba1e88fb, type: 3}
+  - {fileID: 575504330614898786, guid: cbb9a8edfe3f1c34fb9f61826f2fa78f, type: 3}
+  - {fileID: 575504330614898786, guid: cbb9a8edfe3f1c34fb9f61826f2fa78f, type: 3}
   - {fileID: 575504330614898786, guid: cbb9a8edfe3f1c34fb9f61826f2fa78f, type: 3}
 --- !u!114 &885239215
 MonoBehaviour:
@@ -1950,6 +1954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb4884b0c1f60440bf3a73d50681dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameInitialized: 0
   timeUntilSurge: 0
   levelNumber: 0
   surgeCountdownText: {fileID: 380461706}
@@ -2266,8 +2271,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034597312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalScale: {x: 0.007037037, y: 0.007037037, z: 0.007037037}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 380461705}
@@ -2276,9 +2281,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1034597314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,7 +2323,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1034597316
 Canvas:
   m_ObjectHideFlags: 0
@@ -2328,7 +2333,7 @@ Canvas:
   m_GameObject: {fileID: 1034597312}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 2
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2370,7 +2375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157895554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.65, y: 0, z: 0}
+  m_LocalPosition: {x: -3.1000001, y: -0.00000018477441, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2392,7 +2397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveExtremes: 0.2
-  speed: 0.0075
+  speed: 0.125
   waitTime: 3
   offset: -1.65
 --- !u!212 &1157895557
@@ -2481,7 +2486,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157895554}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -3063,7 +3068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1846601393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3286,6 +3291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+  sm: {fileID: 885239215}
   isMoving: 0
   waitTime: 0.5
   finSpeed: 0.3

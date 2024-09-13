@@ -5,6 +5,7 @@ using UnityEngine;
 public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WRITTEN BUT IT SOMEHOW WORKS
 {
     [HideInInspector] public bool canMove = true;
+    public StormManager sm;
 
     public bool isMoving = false;
     bool rotatingUpFins = true;
@@ -38,7 +39,7 @@ public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WR
     void Update(){
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 displacement = transform.position - mousePos;
-            
+        if (!sm.gameInitialized){canMove = false;}
         if (canMove){
             float angle = Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle + 90f);

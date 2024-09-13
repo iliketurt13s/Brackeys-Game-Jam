@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StormManager : MonoBehaviour
 {
+    public bool gameInitialized = false;
     WaveMover waveMover;
     public float timeUntilSurge;
     [HideInInspector] public int levelNumber;
@@ -40,9 +41,11 @@ public class StormManager : MonoBehaviour
     {
         ps = gameObject.GetComponent<PlasticSpawner>(); 
         waveMover = GameObject.FindGameObjectWithTag("waves").GetComponent<WaveMover>();
+        Invoke("activateWaves", 2f);
     }
     void Update()
     {
+        if (gameInitialized){
         if (Input.GetKeyDown(KeyCode.W) && levelNumber == 0 && !gameRunning){
             gameRunning = true;
             //print("yeah");
@@ -53,17 +56,18 @@ public class StormManager : MonoBehaviour
             //print("yeah");
             timeUntilSurge = 45;
         }
+        
+        if (ps.activePlastic == 0){
+            timeUntilSurge = 0f;
+            gameWon = true;
+            surging = true;
+            gameRunning = false;
+            //stopIn = stopSurgeAfter;
+            surgeCountdownText.color = Color.green;
+            foreach(SpriteRenderer sr in lines){sr.color = Color.green;}
+            surgeCountdownText.text = "all food collected";
+        }
         if (gameRunning){
-            if (ps.activePlastic == 0){
-                timeUntilSurge = 0f;
-                gameWon = true;
-                surging = true;
-                gameRunning = false;
-                //stopIn = stopSurgeAfter;
-                surgeCountdownText.color = Color.green;
-                foreach(SpriteRenderer sr in lines){sr.color = Color.green;}
-                surgeCountdownText.text = "all food collected";
-            }
             timeUntilSurge -= Time.deltaTime;
             if (timeUntilSurge < 0){
                 surging = true;
@@ -75,6 +79,7 @@ public class StormManager : MonoBehaviour
                     surgeCountdownText.text = "Water levels rising";
                 }
             } else {
+                ta.canMove = true;
                 foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
                 surgeCountdownText.color = Color.white;
                 if (timeUntilSurge > 30 && levelNumber == 0){
@@ -82,7 +87,7 @@ public class StormManager : MonoBehaviour
                     if (timeUntilSurge > 40){
                         surgeCountdownText.text = "Push the food to the top of the screen";
                     } else {
-                        surgeCountdownText.text = "Get the food off the beach so it doesn't get swept away";
+                        surgeCountdownText.text = "Get it off the beach so it doesn't get swept away";
                     }
                 } else {
                     textTransform.sizeDelta = new Vector2 (960, 100);
@@ -99,6 +104,7 @@ public class StormManager : MonoBehaviour
             foreach(SpriteRenderer sr in lines){sr.color = Color.white;}
             surgeCountdownText.color = Color.white;
             surgeCountdownText.text = "Reseting...";
+        }
         }
     }
 
@@ -133,11 +139,13 @@ public class StormManager : MonoBehaviour
     }
     public void ContinueGame(){
         //shopUI.SetActive(false);
-        if (gameWon){
-            StartCoroutine("restartGame");
-        } 
-        if (gameLost){
-            SceneManager.LoadScene(0);
+        if (gameRestarted){
+            if (gameWon){
+                StartCoroutine("restartGame");
+            } 
+            if (gameLost){
+                SceneManager.LoadScene(0);
+            }
         }
     }
 
@@ -168,5 +176,14 @@ public class StormManager : MonoBehaviour
         foreach(SpriteRenderer sr in lines){sr.color = Color.red;}
         surgeCountdownText.text = "Game Lost";
         timeUntilSurge = 0;
+    }
+
+    void activateWaves(){
+        gameInitialized = true;
+        waveMover.speed = 0.0075f;
+        waveButtonText.gameObject.SetActive(true);
+        waveHeader.gameObject.SetActive(true);
+        waveCollider1.enabled = true;
+        waveCollider2.enabled = true;
     }
 }
