@@ -31,6 +31,9 @@ public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WR
     public float movingDrag;
     public float stoppingDrag;
 
+    public AudioSource moveSound;
+    public AudioSource collisionSound;
+
     void Start()
     {
         changeCooldownStart = waitTime + (waitTime/2f) + .1f;
@@ -67,6 +70,9 @@ public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WR
             }
         } 
     }
+    void OnTriggerEnter2D(Collider2D collision){
+        if (collision.tag != "waves" && !sm.surging){collisionSound.Play();}
+    }
     void FixedUpdate(){
         if (isMoving){
             if (rotatingUpFins){
@@ -102,6 +108,7 @@ public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WR
 
         rotatingUpFins = false;
         rb.drag = movingDrag;
+        moveSound.Play();
         rb.AddForce(turtleTransform.up * speed, ForceMode2D.Impulse);
 
 
@@ -123,6 +130,7 @@ public class TurtleAnimation : MonoBehaviour//THIS IS THE WORST CODE IVE EVER WR
 
         rotatingUpFins = true;
         rb.drag = movingDrag;
+        moveSound.Play();
         rb.AddForce(turtleTransform.up * -(speed/2), ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(waitTime/4);

@@ -12,7 +12,7 @@ public class StormManager : MonoBehaviour
     [HideInInspector] public int levelNumber;
     public TMP_Text surgeCountdownText;
     public SpriteRenderer[] lines;
-    bool surging = false;
+    [HideInInspector] public bool surging = false;
 
     bool gameRunning = false;
     bool gameWon = false;
@@ -36,6 +36,12 @@ public class StormManager : MonoBehaviour
     public TMP_Text waveButtonText;
 
     public Transform waveTransform;
+
+    public Transform cam;
+    public float shakeSpeed;
+    public float shakeMagnitude;
+    bool started = false;
+    //public AudioSource stormSound;
 
     void Start()
     {
@@ -85,7 +91,7 @@ public class StormManager : MonoBehaviour
                 if (timeUntilSurge > 30 && levelNumber == 0){
                     textTransform.sizeDelta = new Vector2 (2000, 100);
                     if (timeUntilSurge > 40){
-                        surgeCountdownText.text = "Push the food to the top of the screen";
+                        surgeCountdownText.text = "Push the trash to the top of the screen";
                     } else {
                         surgeCountdownText.text = "Get it off the beach so it doesn't get swept away";
                     }
@@ -111,6 +117,7 @@ public class StormManager : MonoBehaviour
     void FixedUpdate()
     {
         if (surging){
+            if (!started){StartCoroutine("shake"); started = true;}
             if (!stopSurge){
                 waveMover.offset -= 0.0035f;
                 waveMover.waitTime = 2;
@@ -186,5 +193,14 @@ public class StormManager : MonoBehaviour
         waveHeader.gameObject.SetActive(true);
         waveCollider1.enabled = true;
         waveCollider2.enabled = true;
+    }
+
+    IEnumerator shake(){
+        cam.transform.position = new Vector3(Random.Range(-shakeMagnitude, shakeMagnitude), Random.Range(-shakeMagnitude, shakeMagnitude), -10);
+        //if (!stormSound.isPlaying){stormSound.Play();}
+        yield return new WaitForSeconds(shakeSpeed);
+        cam.transform.position = new Vector3(0, 0, -10);
+        yield return new WaitForSeconds(shakeSpeed);
+        if (surging){StartCoroutine("shake");} else {started = false;}
     }
 }

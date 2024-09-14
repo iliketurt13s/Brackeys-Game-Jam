@@ -18,6 +18,8 @@ public class PlasticSpawner : MonoBehaviour
     int obstaclesToSpawn;
     List<GameObject> obstacles = new List<GameObject>();
 
+    public AudioSource plasticCollectSound;
+
     void Start()
     {
         spawn();
@@ -38,9 +40,8 @@ public class PlasticSpawner : MonoBehaviour
         }
         StormManager sm = gameObject.GetComponent<StormManager>();
         obstaclesToSpawn = sm.levelNumber + 1;
-        if (sm.levelNumber > 4){obstaclesToSpawn = 4;}
-        if (sm.levelNumber > 8){obstaclesToSpawn = 5;}
-        if (obstaclesToSpawn > plasticToSpawn){plasticToSpawn = obstaclesToSpawn;}
+        if (obstaclesToSpawn > 6){obstaclesToSpawn = 6;}
+        if (obstaclesToSpawn > 3){plasticToSpawn = 4;}
         for (int i = obstaclesToSpawn; i > 0; i--){
             float clampedX = Random.Range(left, right);
             if (clampedX < 1 && clampedX > -1){clampedX = 1;}
@@ -53,6 +54,7 @@ public class PlasticSpawner : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision){
         if (collision.tag == "plastic"){
+            plasticCollectSound.Play();
             //Destroy(collision.gameObject);
             Plastic p = collision.GetComponent<Plastic>();
             p.collect();
