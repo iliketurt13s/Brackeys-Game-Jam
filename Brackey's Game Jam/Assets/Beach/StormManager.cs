@@ -41,7 +41,7 @@ public class StormManager : MonoBehaviour
     public float shakeSpeed;
     public float shakeMagnitude;
     bool started = false;
-    //public AudioSource stormSound;
+    public AudioSource stormSound;
 
     void Start()
     {
@@ -197,7 +197,7 @@ public class StormManager : MonoBehaviour
 
     IEnumerator shake(){
         cam.transform.position = new Vector3(Random.Range(-shakeMagnitude, shakeMagnitude), Random.Range(-shakeMagnitude, shakeMagnitude), -10);
-        //if (!stormSound.isPlaying){stormSound.Play();}
+        if (!stormSound.isPlaying && ps.activePlastic > 0 && !gameRestarted){stormSound.Play();}
         yield return new WaitForSeconds(shakeSpeed);
         cam.transform.position = new Vector3(0, 0, -10);
         yield return new WaitForSeconds(shakeSpeed);
